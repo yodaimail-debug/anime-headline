@@ -31,10 +31,10 @@ a{color:inherit}
 header{position:fixed;inset:0 0 auto 0;z-index:20;background:var(--paper2);border-bottom:3px solid var(--rule)}
 .mast{display:flex;align-items:stretch;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:8px;padding:8px 12px 6px 16px}
-.logo b{font-family:var(--head);font-weight:400;font-size:17px;letter-spacing:.02em;line-height:1}
+.logo b{font-family:var(--head);font-weight:400;font-size:17px;letter-spacing:.02em;line-height:1;white-space:nowrap}
 .logo b span{color:var(--red)}
 .gou{font-size:11px;font-weight:800;background:var(--ink);color:var(--paper2);padding:3px 7px;border-radius:2px;white-space:nowrap}
-.how{border-left:3px solid var(--rule);padding:0 14px;font-size:12px;font-weight:800;background:var(--yellow)}
+.how{border-left:3px solid var(--rule);padding:0 14px;font-size:12px;font-weight:800;background:var(--yellow);white-space:nowrap}
 .tabs{display:flex;gap:6px;padding:0 12px;overflow-x:auto;scrollbar-width:none;border-top:2px solid var(--rule);background:var(--paper)}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{font-size:12px;font-weight:800;white-space:nowrap;padding:7px 10px 6px;border:2px solid var(--rule);border-top:0;border-radius:0 0 8px 8px;background:var(--paper2);margin-bottom:-2px;transform:translateY(-1px)}
@@ -45,19 +45,20 @@ header{position:fixed;inset:0 0 auto 0;z-index:20;background:var(--paper2);borde
 /* ===== 縦にめくる ===== */
 main{height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none}
 main::-webkit-scrollbar{display:none}
-.card{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;padding:96px 14px 74px;display:flex}
+.card{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;padding:96px 14px 70px;display:flex;flex-direction:column;gap:8px}
 .card[hidden]{display:none}
 
 /* ===== 横にめくる（コマ） ===== */
-.panels{flex:1;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 4px 10px}
+.panels{flex:1;min-height:0;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 4px 10px}
 .panels::-webkit-scrollbar{display:none}
 .koma{
   flex:0 0 100%;scroll-snap-align:center;position:relative;
   background:var(--paper2);border:3px solid var(--rule);box-shadow:5px 5px 0 var(--rule);
-  padding:22px 18px 18px;display:flex;flex-direction:column;gap:14px;justify-content:center;overflow:hidden;
+  padding:50px 18px 20px;display:flex;flex-direction:column;overflow-x:hidden;overflow-y:auto;scrollbar-width:none;
 }
 .koma > *{position:relative}
-.inner{max-width:560px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.koma::-webkit-scrollbar{display:none}
+.inner{max-width:560px;width:100%;margin:auto;display:flex;flex-direction:column;gap:14px}
 
 /* 1コマ目：集中線 */
 .koma.cover::before{
@@ -66,14 +67,15 @@ main::-webkit-scrollbar{display:none}
   -webkit-mask:radial-gradient(circle at 50% 52%, transparent 22%, #000 60%);
           mask:radial-gradient(circle at 50% 52%, transparent 22%, #000 60%);
 }
-.ep{position:absolute;top:0;left:0;background:var(--ink);color:var(--paper2);font-family:var(--head);font-size:14px;padding:6px 12px 6px 10px;clip-path:polygon(0 0,100% 0,88% 100%,0 100%)}
+.ep{position:absolute;top:0;left:0;z-index:1;background:var(--ink);color:var(--paper2);font-family:var(--head);font-size:14px;padding:6px 12px 6px 10px;clip-path:polygon(0 0,100% 0,88% 100%,0 100%)}
 .ep small{font-family:var(--body);font-weight:800;font-size:10px;margin-left:2px}
 .stamp{align-self:flex-start;font-weight:800;font-size:12px;color:#fff;background:var(--accent);padding:4px 10px;border:2px solid var(--rule);transform:rotate(-3deg);box-shadow:2px 2px 0 var(--rule)}
 .meta{display:flex;gap:6px;flex-wrap:wrap;font-size:11px;font-weight:700;color:var(--sub)}
 .meta span{border:1.5px solid var(--sub);border-radius:99px;padding:1px 8px}
-h2{font-family:var(--head);font-weight:400;font-size:clamp(25px,7.2vw,38px);line-height:1.32;word-break:keep-all;overflow-wrap:anywhere}
+h2{font-family:var(--head);font-weight:400;font-size:clamp(24px,6.8vw,36px);line-height:1.38;text-wrap:balance}
+.jp{word-break:keep-all;overflow-wrap:anywhere;line-break:strict}
 h2 em{font-style:normal;background:linear-gradient(transparent 58%,var(--yellow) 58%,var(--yellow) 92%,transparent 92%)}
-.lead{font-size:15.5px;line-height:1.9;font-weight:500}
+.lead{font-size:15.5px;line-height:1.9;font-weight:500;text-wrap:pretty}
 .src{font-size:11.5px;color:var(--sub);font-weight:700}
 .src a{text-decoration:underline;text-underline-offset:3px}
 .turn{align-self:flex-end;font-size:12px;font-weight:800;color:var(--accent)}
@@ -83,7 +85,7 @@ h2 em{font-style:normal;background:linear-gradient(transparent 58%,var(--yellow)
 .narr{background:var(--ink);color:var(--paper2);padding:14px 16px;font-size:16px;line-height:1.85;font-weight:700}
 .label{font-family:var(--head);font-size:15px;display:flex;align-items:center;gap:8px}
 .label::before{content:"";width:14px;height:14px;background:var(--accent);border:2px solid var(--rule);transform:rotate(45deg)}
-.ptext{font-size:16px;line-height:1.95;font-weight:500}
+.ptext{font-size:16px;line-height:1.95;font-weight:500;text-wrap:pretty}
 
 /* 吹き出し（現場の声） */
 .bubble{position:relative;background:#fff;border:3px solid var(--rule);border-radius:28px;padding:18px 18px;font-size:15.5px;line-height:1.85;font-weight:500}
@@ -97,10 +99,11 @@ h2 em{font-style:normal;background:linear-gradient(transparent 58%,var(--yellow)
 .note{font-size:10.5px;color:var(--sub);line-height:1.7}
 
 /* コマ送りインジケータ・シェア */
-.pages{position:absolute;left:34px;bottom:96px;display:flex;gap:4px}
+.bar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 4px 0 8px;min-height:40px}
+.pages{display:flex;gap:5px}
 .pages i{width:10px;height:10px;border:2px solid var(--rule);background:var(--paper2);transform:rotate(45deg)}
 .pages i.on{background:var(--accent)}
-.share{position:absolute;right:30px;bottom:94px;height:36px;padding:0 12px;border:2.5px solid var(--rule);background:var(--yellow);font-size:12px;font-weight:800;box-shadow:3px 3px 0 var(--rule)}
+.share{margin-left:auto;height:36px;padding:0 12px;border:2.5px solid var(--rule);background:var(--yellow);font-size:12px;font-weight:800;box-shadow:3px 3px 0 var(--rule)}
 .share:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--rule)}
 
 /* ===== フッター：次回予告 ===== */
@@ -114,7 +117,7 @@ footer{position:fixed;inset:auto 0 0 0;z-index:20;display:flex;justify-content:s
 /* 目次・あとがき */
 .toc{list-style:none;display:flex;flex-direction:column;max-height:50dvh;overflow-y:auto}
 .toc button{display:flex;gap:10px;align-items:baseline;text-align:left;width:100%;padding:8px 0;font-size:14px;font-weight:700;border-bottom:2px dashed rgba(22,19,15,.25)}
-.toc button span{font-family:var(--head);font-size:12px;min-width:44px;color:var(--accent)}
+.toc button span:first-child{font-family:var(--head);font-size:12px;min-width:44px;color:var(--accent)}
 .rules{list-style:none;display:flex;flex-direction:column;gap:9px;font-size:14px;line-height:1.75;font-weight:500}
 .rules{counter-reset:r;max-height:52dvh;overflow-y:auto}
 .rules li{padding-left:28px;position:relative;counter-increment:r}
@@ -124,6 +127,8 @@ footer{position:fixed;inset:auto 0 0 0;z-index:20;display:flex;justify-content:s
 .toast.on{opacity:1}
 
 @media (min-width:900px){.card{padding-left:12vw;padding-right:12vw}}
+@media (max-width:380px){.logo{padding-left:12px;gap:6px}.logo b{font-size:15px}.gou{font-size:10px;padding:3px 5px}.how{padding:0 10px}}
+@media (max-height:720px){.koma{padding:44px 16px 16px}.inner{gap:10px}h2{font-size:clamp(22px,6.4vw,30px)}.lead,.ptext{font-size:14.5px;line-height:1.8}.bubble{font-size:14.5px;line-height:1.75;padding:14px 16px}.bubble b{font-size:17px}.narr{font-size:15px}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style>
 </head>
@@ -170,6 +175,38 @@ const feed = $("#feed");
 const pad = n => String(n).padStart(2,"0");
 const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const plain = s => s.replace(/<[^>]+>/g,"");
+/* 日本語を文節ごとに区切り、文節の切れ目にだけ改行できるようにする */
+const SEG = (typeof Intl!=="undefined" && Intl.Segmenter) ? new Intl.Segmenter("ja",{granularity:"word"}) : null;
+const OPEN = /^[「『（(【〈《［\[“]+$/;
+const GLUE = /^[\u3041-\u309F\u30FC、。，．・：；！？!?」』）)】〉》］\]”…ー\s]+$/;
+/* 数字と単位（5億円・20話・11月20–22日など）や「約」「第」は切り離さない */
+const NUMGLUE = (cur,w) =>
+  (/[0-9０-９.,．]$/.test(cur) && /^[0-9０-９.,．%％万億兆千百十年月日時分秒本話期作人円位倍件歳回巻号週部館曲枚社分台割]/.test(w)) ||
+  (/[–\-－/]$/.test(cur) && /^[0-9０-９]/.test(w)) ||
+  (/[0-9０-９]$/.test(cur) && /^[–\-－/]/.test(w)) ||
+  /(約|第|全|計|各|毎)$/.test(cur) ||
+  (/[\u4E00-\u9FFF々〆ヶ\u30A1-\u30FAーA-Za-z0-9０-９]$/.test(cur) && /^[\u4E00-\u9FFF々〆ヶ\u30A1-\u30FAー]/.test(w)) ||
+  (/[A-Za-z0-9.]$/.test(cur) && /^[A-Za-z0-9.]/.test(w)) ||
+  (/[\u4E00-\u9FFF々]$/.test(cur) && /^[A-Za-z]/.test(w));
+function phraseText(str){
+  str = String(str);
+  if(!SEG) return esc(str);
+  const out = []; let cur = "";
+  for(const {segment:w} of SEG.segment(str)){
+    if(cur && (GLUE.test(w) || OPEN.test(cur) || NUMGLUE(cur,w))) cur += w;
+    else { if(cur) out.push(cur); cur = w; }
+  }
+  if(cur) out.push(cur);
+  return out.map(esc).join("<wbr>");
+}
+/* 見出し：<em>…</em> だけは残して文節処理する */
+const phraseTitle = t => String(t).split(/(<em>.*?<\/em>)/).map(part=>{
+  const m = part.match(/^<em>(.*)<\/em>$/);
+  return m ? `<em>${phraseText(m[1])}</em>` : phraseText(part);
+}).filter(Boolean).reduce((acc,h,i,arr)=>{
+  const nextFirst = (arr[i+1]||"").replace(/^<em>/,"").charAt(0);
+  return acc + h + (i<arr.length-1 && !GLUE.test(nextFirst) ? "<wbr>" : "");
+},"");
 const srcHtml = arr => arr.map(([n,u,d]) => `<a href="${u}" target="_blank" rel="noopener">${esc(n)}</a>${d?"・"+esc(d):""}`).join("　");
 
 (function(){
@@ -196,39 +233,39 @@ function render(){
     const k = [];
     k.push(`<article class="koma cover"><div class="ep">第${pad(n)}話<small>／全${ISSUE.items.length}話</small></div><div class="inner">
       <span class="stamp">${CATS[it.cat][0]}</span>
-      <h2>${it.title}</h2>
+      <h2 class="jp">${phraseTitle(it.title)}</h2>
       <div class="meta"><span>${esc(it.area)}</span><span>約${it.sec}秒で読める</span></div>
-      <p class="lead">${esc(it.lead)}</p>
+      <p class="lead jp">${phraseText(it.lead)}</p>
       <p class="src">出典：${srcHtml(it.src)}</p>
       ${(it.gist||it.details.length||it.voices.length)?'<p class="turn">横にめくると、くわしく</p>':""}
     </div></article>`);
-    if(it.gist) k.push(`<article class="koma"><div class="inner"><p class="label">ざっくり言うと</p><p class="narr">${esc(it.gist)}</p></div></article>`);
+    if(it.gist) k.push(`<article class="koma"><div class="inner"><p class="label">ざっくり言うと</p><p class="narr jp">${phraseText(it.gist)}</p></div></article>`);
     it.details.forEach((d,j)=>{
       const last = j===it.details.length-1 && it.dsrc;
-      k.push(`<article class="koma"><div class="inner"><p class="label">くわしい話 ${j+1}</p><p class="ptext">${esc(d)}</p>${last?`<p class="src">出典：${srcHtml(it.dsrc)}</p>`:""}</div></article>`);
+      k.push(`<article class="koma"><div class="inner"><p class="label">くわしい話 ${j+1}</p><p class="ptext jp">${phraseText(d)}</p>${last?`<p class="src">出典：${srcHtml(it.dsrc)}</p>`:""}</div></article>`);
     });
     it.voices.forEach((v,j)=>{
       const last = j===it.voices.length-1;
       const few = last && it.voices.length<2 ? "別の媒体や発信者で確認できた見解は1件だけのため、無理に増やしていません。" : "";
       k.push(`<article class="koma"><div class="inner"><p class="label">${esc(v.kind)}　${j+1} / ${it.voices.length}</p>
-        <div class="bubble"><b>「${esc(v.head)}」</b>${esc(v.text)}</div>
+        <div class="bubble jp"><b>「${phraseText(v.head)}」</b>${phraseText(v.text)}</div>
         <div class="speaker"><span class="face">${esc(v.who.slice(0,1))}</span><div><strong>${esc(v.who)}</strong><span>${esc(v.role)}</span></div></div>
         ${v.src?`<p class="src">出典：${srcHtml(v.src)}</p>`:""}
         ${last?`<p class="note">${VOICE_NOTE}${few}</p>`:""}</div></article>`);
     });
     html += `<section class="card" id="n${pad(n)}" data-cat="${it.cat}" style="--accent:var(${color})" aria-label="${esc(plain(it.title))}">
       <div class="panels">${k.join("")}</div>
-      ${k.length>1?`<div class="pages" aria-hidden="true">${k.map((_,j)=>`<i class="${j?"":"on"}"></i>`).join("")}</div>`:""}
-      <button class="share" data-share="n${pad(n)}">この話をシェア</button>
+      <div class="bar">${k.length>1?`<div class="pages" aria-hidden="true">${k.map((_,j)=>`<i class="${j?"":"on"}"></i>`).join("")}</div>`:""}
+      <button class="share" data-share="n${pad(n)}">この話をシェア</button></div>
     </section>`;
   });
   html += `<section class="card" id="end" data-cat="all" style="--accent:var(--red)">
     <div class="panels">
-      <article class="koma"><div class="ep">今回の話数一覧</div><div class="inner" style="margin-top:28px">
-        <ul class="toc">${ISSUE.items.map((it,i)=>`<li><button data-go="n${pad(i+1)}"><span>第${pad(i+1)}話</span>${esc(plain(it.title))}</button></li>`).join("")}</ul>
+      <article class="koma"><div class="ep">今回の話数一覧</div><div class="inner">
+        <ul class="toc">${ISSUE.items.map((it,i)=>`<li><button data-go="n${pad(i+1)}"><span>第${pad(i+1)}話</span><span class="jp">${phraseText(plain(it.title))}</span></button></li>`).join("")}</ul>
         <p class="turn">横にめくると、選び方</p></div></article>
-      <article class="koma"><div class="ep">あとがき（選び方）</div><div class="inner" style="margin-top:28px">
-        <ol class="rules">${rulesText().map(r=>`<li>${esc(r)}</li>`).join("")}</ol>
+      <article class="koma"><div class="ep">あとがき（選び方）</div><div class="inner">
+        <ol class="rules">${rulesText().map(r=>`<li class="jp">${phraseText(r)}</li>`).join("")}</ol>
         <p class="note">${EDITOR_NOTE}</p></div></article>
     </div>
   </section>`;
