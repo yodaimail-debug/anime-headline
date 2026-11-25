@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>アニメ業界ヘッドライン</title>
+<meta name="description" content="アニメ業界のニュースと現場の声を、1話ずつ。縦にめくって次の話、横にめくってくわしく。毎朝更新。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1p:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e4; --paper2:#fffdf6; --ink:#16130f; --sub:#5d574c; --rule:#16130f;
+  --red:#e5332a; --yellow:#ffd42a; --blue:#2f6fe4; --pink:#ff5d93;
+  --accent:var(--red);
+  --head:"Dela Gothic One","M PLUS 1p",system-ui,sans-serif;
+  --body:"M PLUS 1p",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;color-scheme:light}
+body{
+  font-family:var(--body);color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased;
+  background-color:var(--paper);
+  background-image:radial-gradient(rgba(22,19,15,.09) 1px,transparent 1.3px);
+  background-size:7px 7px;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+
+/* ===== ヘッダー：雑誌の表紙帯 ===== */
+header{position:fixed;inset:0 0 auto 0;z-index:20;background:var(--paper2);border-bottom:3px solid var(--rule)}
+.mast{display:flex;align-items:stretch;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:8px;padding:8px 12px 6px 16px}
+.logo b{font-family:var(--head);font-weight:400;font-size:17px;letter-spacing:.02em;line-height:1}
+.logo b span{color:var(--red)}
+.gou{font-size:11px;font-weight:800;background:var(--ink);color:var(--paper2);padding:3px 7px;border-radius:2px;white-space:nowrap}
+.how{border-left:3px solid var(--rule);padding:0 14px;font-size:12px;font-weight:800;background:var(--yellow)}
+.tabs{display:flex;gap:6px;padding:0 12px;overflow-x:auto;scrollbar-width:none;border-top:2px solid var(--rule);background:var(--paper)}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{font-size:12px;font-weight:800;white-space:nowrap;padding:7px 10px 6px;border:2px solid var(--rule);border-top:0;border-radius:0 0 8px 8px;background:var(--paper2);margin-bottom:-2px;transform:translateY(-1px)}
+.tabs button i{font-style:normal;margin-left:4px;font-size:11px;color:var(--sub)}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--paper2)}
+.tabs button[aria-pressed=true] i{color:var(--yellow)}
+
+/* ===== 縦にめくる ===== */
+main{height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none}
+main::-webkit-scrollbar{display:none}
+.card{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;padding:96px 14px 74px;display:flex}
+.card[hidden]{display:none}
+
+/* ===== 横にめくる（コマ） ===== */
+.panels{flex:1;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 4px 10px}
+.panels::-webkit-scrollbar{display:none}
+.koma{
+  flex:0 0 100%;scroll-snap-align:center;position:relative;
+  background:var(--paper2);border:3px solid var(--rule);box-shadow:5px 5px 0 var(--rule);
+  padding:22px 18px 18px;display:flex;flex-direction:column;gap:14px;justify-content:center;overflow:hidden;
+}
+.koma > *{position:relative}
+.inner{max-width:560px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+
+/* 1コマ目：集中線 */
+.koma.cover::before{
+  content:"";position:absolute;inset:-40%;
+  background:repeating-conic-gradient(from 0deg at 50% 52%, rgba(22,19,15,.07) 0deg 1.2deg, transparent 1.2deg 6deg);
+  -webkit-mask:radial-gradient(circle at 50% 52%, transparent 22%, #000 60%);
+          mask:radial-gradient(circle at 50% 52%, transparent 22%, #000 60%);
+}
+.ep{position:absolute;top:0;left:0;background:var(--ink);color:var(--paper2);font-family:var(--head);font-size:14px;padding:6px 12px 6px 10px;clip-path:polygon(0 0,100% 0,88% 100%,0 100%)}
+.ep small{font-family:var(--body);font-weight:800;font-size:10px;margin-left:2px}
+.stamp{align-self:flex-start;font-weight:800;font-size:12px;color:#fff;background:var(--accent);padding:4px 10px;border:2px solid var(--rule);transform:rotate(-3deg);box-shadow:2px 2px 0 var(--rule)}
+.meta{display:flex;gap:6px;flex-wrap:wrap;font-size:11px;font-weight:700;color:var(--sub)}
+.meta span{border:1.5px solid var(--sub);border-radius:99px;padding:1px 8px}
+h2{font-family:var(--head);font-weight:400;font-size:clamp(25px,7.2vw,38px);line-height:1.32;word-break:keep-all;overflow-wrap:anywhere}
+h2 em{font-style:normal;background:linear-gradient(transparent 58%,var(--yellow) 58%,var(--yellow) 92%,transparent 92%)}
+.lead{font-size:15.5px;line-height:1.9;font-weight:500}
+.src{font-size:11.5px;color:var(--sub);font-weight:700}
+.src a{text-decoration:underline;text-underline-offset:3px}
+.turn{align-self:flex-end;font-size:12px;font-weight:800;color:var(--accent)}
+.turn::after{content:" ▶"}
+
+/* ナレーション枠（ざっくり） */
+.narr{background:var(--ink);color:var(--paper2);padding:14px 16px;font-size:16px;line-height:1.85;font-weight:700}
+.label{font-family:var(--head);font-size:15px;display:flex;align-items:center;gap:8px}
+.label::before{content:"";width:14px;height:14px;background:var(--accent);border:2px solid var(--rule);transform:rotate(45deg)}
+.ptext{font-size:16px;line-height:1.95;font-weight:500}
+
+/* 吹き出し（現場の声） */
+.bubble{position:relative;background:#fff;border:3px solid var(--rule);border-radius:28px;padding:18px 18px;font-size:15.5px;line-height:1.85;font-weight:500}
+.bubble::after{content:"";position:absolute;left:34px;bottom:-21px;width:26px;height:22px;background:#fff;border:3px solid var(--rule);border-top:0;border-right:0;transform:skewX(-28deg);clip-path:polygon(0 0,100% 0,0 100%)}
+.bubble b{display:block;font-family:var(--head);font-weight:400;font-size:19px;margin-bottom:6px}
+.speaker{margin-top:12px;display:flex;align-items:center;gap:10px}
+.speaker .face{width:38px;height:38px;border-radius:50%;border:3px solid var(--rule);background:var(--accent);display:grid;place-items:center;font-family:var(--head);color:#fff;font-size:15px}
+.speaker div{display:flex;flex-direction:column}
+.speaker strong{font-size:14px}
+.speaker span{font-size:11px;color:var(--sub);font-weight:700}
+.note{font-size:10.5px;color:var(--sub);line-height:1.7}
+
+/* コマ送りインジケータ・シェア */
+.pages{position:absolute;left:34px;bottom:96px;display:flex;gap:4px}
+.pages i{width:10px;height:10px;border:2px solid var(--rule);background:var(--paper2);transform:rotate(45deg)}
+.pages i.on{background:var(--accent)}
+.share{position:absolute;right:30px;bottom:94px;height:36px;padding:0 12px;border:2.5px solid var(--rule);background:var(--yellow);font-size:12px;font-weight:800;box-shadow:3px 3px 0 var(--rule)}
+.share:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--rule)}
+
+/* ===== フッター：次回予告 ===== */
+footer{position:fixed;inset:auto 0 0 0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:8px 14px calc(8px + env(safe-area-inset-bottom));background:var(--paper2);border-top:3px solid var(--rule)}
+.count{font-family:var(--head);font-size:20px;line-height:1}
+.count small{font-family:var(--body);font-weight:800;font-size:12px;color:var(--sub);margin-left:2px}
+.next{font-family:var(--head);font-size:15px;background:var(--red);color:#fff;border:3px solid var(--rule);padding:8px 16px;transform:skewX(-8deg);box-shadow:3px 3px 0 var(--rule)}
+.next span{display:inline-block;transform:skewX(8deg)}
+.next:active{box-shadow:1px 1px 0 var(--rule);translate:2px 2px}
+
+/* 目次・あとがき */
+.toc{list-style:none;display:flex;flex-direction:column;max-height:50dvh;overflow-y:auto}
+.toc button{display:flex;gap:10px;align-items:baseline;text-align:left;width:100%;padding:8px 0;font-size:14px;font-weight:700;border-bottom:2px dashed rgba(22,19,15,.25)}
+.toc button span{font-family:var(--head);font-size:12px;min-width:44px;color:var(--accent)}
+.rules{list-style:none;display:flex;flex-direction:column;gap:9px;font-size:14px;line-height:1.75;font-weight:500}
+.rules{counter-reset:r;max-height:52dvh;overflow-y:auto}
+.rules li{padding-left:28px;position:relative;counter-increment:r}
+.rules li::before{content:counter(r);position:absolute;left:0;top:2px;width:20px;height:20px;display:grid;place-items:center;background:var(--accent);color:#fff;border:2px solid var(--rule);font-family:var(--head);font-size:11px}
+
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--paper2);font-size:13px;font-weight:700;padding:8px 14px;border-radius:99px;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
+.toast.on{opacity:1}
+
+@media (min-width:900px){.card{padding-left:12vw;padding-right:12vw}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="mast">
+    <div class="logo"><b>アニメ業界<span>ヘッドライン</span></b><span class="gou" id="gou"></span></div>
+    <button class="how" id="howBtn">選び方</button>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="カテゴリ"></nav>
+</header>
+
+<main id="feed"></main>
+
+<footer>
+  <div class="count">第<span id="cur">1</span>話<small>/ 全<span id="tot">0</span>話</small></div>
+  <button class="next" id="nextBtn"><span id="nextLabel">次の話へ ▼</span></button>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ===== 号データ（毎朝ここだけ差し替える） ===== */
+const ISSUE = {
+  date: "2026-11-22",
+  range: "11月20–22日の報道・投稿",
+  items: [
+    {
+      cat: "news", area: "劇場", sec: 50,
+      title: "押井守版『ボトムズ』、第2作は<em>2027年公開</em>",
+      lead: "『装甲騎兵ボトムズ 灰色の魔女』の第1作が11月20日に劇場公開された。あわせて、全2部作の第2作が2027年に公開されると発表された。",
+      src: [["アニメハック", "https://anime.eiga.com/news/127915/", "11月20日"]],
+      gist: "サンライズ50周年記念の新作として押井守さんが監督したボトムズが、2部作の前半を劇場で公開した。後半は来年になる。",
+      details: [
+        "制作はサンライズ、制作協力はProduction I.G、配給はバンダイナムコフィルムワークス。原作と監修は高橋良輔さん。",
+        "第1作の公開日は11月20日。第2作の公開時期は、当初は「後日発表」とされていた。"
+      ],
+      dsrc: [["gamebiz", "https://gamebiz.jp/news/425725"]],
+      voices: [
+        {kind: "反響", head: "満席の回も", who: "観客の投稿（X）", role: "Yahoo!リアルタイム検索で確認", text: "公開2日目には、都内の劇場で売り切れの回が出たという投稿があった。メカの3DCGの見せ方に注目する声も目立つ。"}
+      ]
+    },
+    {
+      cat: "news", area: "人材育成", sec: 50,
+      title: "Netflix、アニメプロデューサーの<em>育成道場</em>を初開催",
+      lead: "Netflixは11月21日、次世代のアニメプロデューサーを育てるプログラム「Netflix クリエイターズ道場（アニメ）」を都内で開いた。",
+      src: [["GameBusiness.jp", "https://www.gamebusiness.jp/article/2026/11/03/28533.html", "11月3日告知"]],
+      gist: "配信大手が、作品を買い付けるだけでなく、日本でアニメを企画する人を育てることにも手を広げている。",
+      details: [
+        "事前の告知では、TRIGGERの大塚雅彦さんらが登壇予定とされていた。",
+        "参加者の投稿によると、講義の題材は『サイバーパンク エッジランナーズ』と『超かぐや姫！』だった。"
+      ],
+      voices: [
+        {kind: "現場の声", head: "同世代とつながれた", who: "ながいさん", role: "アニメ制作（『ねずみくんのチョッキ』）", text: "参加を報告し、同じ世代のアニメ業界の人たちとたくさん出会えたと投稿した。"}
+      ]
+    },
+    {
+      cat: "work", area: "新作", sec: 45,
+      title: "2027年の新作TVアニメ、<em>発表が相次ぐ</em>",
+      lead: "『地元のいじめっ子達に仕返ししようとしたら、別の戦いが始まった。』のTVアニメ化が決まった。2027年1月に始まる作品も、放送日やキャストが続けて発表されている。",
+      src: [["アニメ!アニメ!", "https://animeanime.jp/article/2026/11/20/104963.html", "11月20日"]],
+      gist: "冬の新番組の情報が出そろう時期に入った。",
+      details: [
+        "『いじはじ』は講談社「水曜日のシリウス」連載で、累計72万部。監督は熊野千尋さん、制作は月虹。メインキャストは11月21日から毎日12時に発表され、PVは11月24日に公開予定。",
+        "『異世界マンチキン』は1月7日、『ペンと手錠と事実婚』は1月9日に放送開始。『くくルプ』は長谷川育美さんと浦和希さんの出演が発表された。"
+      ],
+      dsrc: [["アニメハック（異世界マンチキン）", "https://anime.eiga.com/news/127898/"], ["アニメハック（ペンと手錠と事実婚）", "https://anime.eiga.com/news/127917/"], ["アニメハック（くくルプ）", "https://anime.eiga.com/news/127905/"]],
+      voices: []
+    },
+    {
+      cat: "news", area: "スタジオ", sec: 35,
+      title: "ufotable、無限列車編の<em>絵コンテグッズ</em>",
+      lead: "ufotableは、『鬼滅の刃』無限列車編の絵コンテを使ったグッズを発表した。店舗では11月25日から12月20日まで販売する。",
+      src: [["ufotable公式X", "https://x.com/ufotable", "11月22日"]],
+      gist: "無限列車編の再放送が終わるのに合わせて、映像の設計図にあたる絵コンテを商品にした。",
+      details: [
+        "オンラインでは11月25日から12月21日23時59分まで販売する（公式グッズ情報アカウントより）。",
+        "Xでは「絵コンテは本にまとめてほしい」という声も多く見られた。"
+      ],
+      voices: []
+    },
+    {
+      cat: "news", area: "海外", sec: 30,
+      title: "『キル・ビル』完全版、<em>I.Gのアニメパート</em>を公開",
+      lead: "『キル・ビル』完全版の場面写真が公開された。Production I.Gが制作したアニメパートの写真も含まれている。",
+      src: [["アニメハック", "https://anime.eiga.com/news/127904/", "11月21日"]],
+      gist: "20年以上前にアニメパートを手がけたI.Gの名前が、完全版でもふたたび出ている。",
+      details: [], voices: []
+    },
+    {
+      cat: "work", area: "TV", sec: 25,
+      title: "『ドラえもん』大みそかSPで<em>初アニメ化</em>の話",
+      lead: "『ドラえもん』の大みそかスペシャルで、原作の「出入口チョーク」が初めてアニメになる。",
+      src: [["アニメハック", "https://anime.eiga.com/news/127913/", "11月21日"]],
+      gist: "", details: [], voices: []
+    },
+    {
+      cat: "news", area: "CM", sec: 25,
+      title: "MAPPA制作のCM「MARO17」に<em>新キャラ</em>",
+      lead: "MAPPAが制作するヘアケアブランド「MARO17」のアニメCMに、新しいキャラクターが加わった。声は岡本信彦さんと小野大輔さん。",
+      src: [["アニメ!アニメ!", "https://animeanime.jp/article/2026/11/21/104975.html", "11月21日"]],
+      gist: "", details: [], voices: []
+    },
+    {
+      cat: "voice", area: "演出", sec: 25,
+      title: "ブラクロ2期8話、<em>ゼノン戦</em>のコンテ演出",
+      lead: "演出の椅子汰さんが、『ブラッククローバー』2nd Season第8話でゼノン戦パートのコンテ演出を担当したと投稿した。",
+      src: [["本人のX", "https://x.com/Isuta_meister", "11月21日"]],
+      gist: "",
+      details: [],
+      voices: [
+        {kind: "現場の声", head: "戦いの場面ごとに担当", who: "椅子汰さん", role: "演出（ブラッククローバー）", text: "前半と後半で分けるのではなく、ゼノンとユノ、ランギルスの戦いに入ってからを担当したと説明した。絵コンテの飯田薫久さん、演出の小野歩さんとの共同。"}
+      ]
+    },
+    {
+      cat: "voice", area: "作画", sec: 25,
+      title: "名探偵プリキュア！42話、<em>初代キャラデザ</em>が作監に",
+      lead: "第42話の作画監督に、『ふたりはプリキュア』でキャラクターデザインを担当した稲上晃さんが入り、放送後に話題になった。",
+      src: [["Yahoo!リアルタイム検索（X）", "https://search.yahoo.co.jp/realtime/", "11月22日"]],
+      gist: "",
+      details: ["作画監督は沼田広さんと稲上晃さんの2人。"],
+      voices: [
+        {kind: "現場の声", head: "幼いみくるを描きました", who: "やまかわさん", role: "原画（名探偵プリキュア！）", text: "第42話に原画で参加し、幼いころのみくるを担当したと報告した。"}
+      ]
+    },
+    {
+      cat: "voice", area: "作画", sec: 20,
+      title: "ウェルシュ＆シェダー8話、<em>約30カット</em>を一人で",
+      lead: "アニメーターのオカダさんが、『蒼き伝承 ウェルシュ＆シェダー』第8話でおよそ30カットのレイアウトと原画を担当したと投稿した。",
+      src: [["本人のX", "https://x.com/onoff22anime", "11月20日"]],
+      gist: "", details: [], voices: []
+    },
+    {
+      cat: "voice", area: "作画・撮影", sec: 20,
+      title: "『彼方から』『らんま』の<em>現場から</em>",
+      lead: "Edith Sotoさんが『彼方から』第7話に作画監督として参加したと報告した。PRAの撮影部は、『らんま1/2』第3期第32話で撮影監督と撮影を担当したと発信した。",
+      src: [["Edith SotoさんのX", "https://x.com/EdithSotoArt", "11月22日"], ["PRA公式X", "https://x.com/PrimeReliance", "11月22日"]],
+      gist: "", details: [], voices: []
+    }
+  ],
+  /* その日の補足（任意）。例：「一部に数日前の発表を含む」 */
+  freshnessNote: "一部に数日前の発表を含む"
+};
+
+/* ===== ニュースの選び方（毎号共通。{…} は号データから自動で埋まる） ===== */
+const TARGET = 20;                                   /* 1号あたりの目安本数 */
+const MIX = {news:.55, work:.30, voice:.15};          /* 配分の目安 */
+const RULES = [
+  "鮮度は24時間以内が原則。今日の号は{range}からのまとめ号で、{fresh}。",
+  "出典は各社の公式発表、通信社、アニメ専門メディアなどの一次情報。SNSの投稿だけで成り立つ話題は優先度を下げ、主に「現場の声」で扱う。",
+  "物差しは「業界が動いたか」。スタジオや資本の動き、配信や興行の数字、制作現場の働き方など、作り手と視聴者の多くに効くことを優先する。炎上やゴシップは載せない。",
+  "フックの強さでは選ばない。地味でも大事なニュースは見出しで届ける。",
+  "配分の目安は業界ニュース55%・新作・作品30%・現場の声15%（{target}本なら{targetMix}）。今日は{n}本（{mix}）。",
+  "明るい話題を最低2本入れる。",
+  "現場の声は、クレジットが確認できる業界人が公開で発信した内容だけ。噂、リーク、早売りのネタバレは扱わない。"
+];
+const EDITOR_NOTE = "見解は別々の媒体や発信者から、見る角度の違うものを原則2件。確認できない場合は無理に増やさない。各記事は速報性のある要約です。正確な内容は必ず出典で確かめてください。記事の選定・要約・解説は、AI（Anthropic社のClaude）が出典を確認しながら編集しています。誤りに気づいたら出典を優先してください。";
+const VOICE_NOTE = "見解は発言や分析の要約です。「当事者の声」は関係者・会社の説明、「現場の声」はクレジットのある業界人の発信、「専門家の見解」は専門家本人、「分析・データ」は機関や媒体の分析、「反響」は視聴者の反応です。";
+
+/* ===== 以下は描画（毎日変えない） ===== */
+const CATS = {news:["業界ニュース","--red"], work:["新作・作品","--blue"], voice:["現場の声","--pink"]};
+const $ = s => document.querySelector(s);
+const feed = $("#feed");
+const pad = n => String(n).padStart(2,"0");
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const plain = s => s.replace(/<[^>]+>/g,"");
+const srcHtml = arr => arr.map(([n,u,d]) => `<a href="${u}" target="_blank" rel="noopener">${esc(n)}</a>${d?"・"+esc(d):""}`).join("　");
+
+(function(){
+  const dt = new Date(ISSUE.date+"T12:00:00+09:00");
+  const w = "日月火水木金土"[dt.getDay()];
+  const [, m, d] = ISSUE.date.split("-").map(Number);
+  $("#gou").textContent = `${m}.${d}(${w})号`;
+})();
+
+function rulesText(){
+  const c = {news:0, work:0, voice:0};
+  ISSUE.items.forEach(it=>c[it.cat]++);
+  const label = o => `業界ニュース${o.news}・新作・作品${o.work}・現場の声${o.voice}`;
+  const t = {news:Math.round(TARGET*MIX.news), work:Math.round(TARGET*MIX.work)};
+  t.voice = TARGET - t.news - t.work;
+  const map = {range:ISSUE.range, fresh:ISSUE.freshnessNote||"ほぼすべてが直近24時間の情報", target:TARGET, targetMix:label(t), n:ISSUE.items.length, mix:label(c)};
+  return RULES.map(r=>r.replace(/\{(\w+)\}/g,(_,k)=>map[k]));
+}
+
+function render(){
+  let html = "";
+  ISSUE.items.forEach((it,i)=>{
+    const n = i+1, color = CATS[it.cat][1];
+    const k = [];
+    k.push(`<article class="koma cover"><div class="ep">第${pad(n)}話<small>／全${ISSUE.items.length}話</small></div><div class="inner">
+      <span class="stamp">${CATS[it.cat][0]}</span>
+      <h2>${it.title}</h2>
+      <div class="meta"><span>${esc(it.area)}</span><span>約${it.sec}秒で読める</span></div>
+      <p class="lead">${esc(it.lead)}</p>
+      <p class="src">出典：${srcHtml(it.src)}</p>
+      ${(it.gist||it.details.length||it.voices.length)?'<p class="turn">横にめくると、くわしく</p>':""}
+    </div></article>`);
+    if(it.gist) k.push(`<article class="koma"><div class="inner"><p class="label">ざっくり言うと</p><p class="narr">${esc(it.gist)}</p></div></article>`);
+    it.details.forEach((d,j)=>{
+      const last = j===it.details.length-1 && it.dsrc;
+      k.push(`<article class="koma"><div class="inner"><p class="label">くわしい話 ${j+1}</p><p class="ptext">${esc(d)}</p>${last?`<p class="src">出典：${srcHtml(it.dsrc)}</p>`:""}</div></article>`);
+    });
+    it.voices.forEach((v,j)=>{
+      const last = j===it.voices.length-1;
+      const few = last && it.voices.length<2 ? "別の媒体や発信者で確認できた見解は1件だけのため、無理に増やしていません。" : "";
+      k.push(`<article class="koma"><div class="inner"><p class="label">${esc(v.kind)}　${j+1} / ${it.voices.length}</p>
+        <div class="bubble"><b>「${esc(v.head)}」</b>${esc(v.text)}</div>
+        <div class="speaker"><span class="face">${esc(v.who.slice(0,1))}</span><div><strong>${esc(v.who)}</strong><span>${esc(v.role)}</span></div></div>
+        ${v.src?`<p class="src">出典：${srcHtml(v.src)}</p>`:""}
+        ${last?`<p class="note">${VOICE_NOTE}${few}</p>`:""}</div></article>`);
+    });
+    html += `<section class="card" id="n${pad(n)}" data-cat="${it.cat}" style="--accent:var(${color})" aria-label="${esc(plain(it.title))}">
+      <div class="panels">${k.join("")}</div>
+      ${k.length>1?`<div class="pages" aria-hidden="true">${k.map((_,j)=>`<i class="${j?"":"on"}"></i>`).join("")}</div>`:""}
+      <button class="share" data-share="n${pad(n)}">この話をシェア</button>
+    </section>`;
+  });
+  html += `<section class="card" id="end" data-cat="all" style="--accent:var(--red)">
+    <div class="panels">
+      <article class="koma"><div class="ep">今回の話数一覧</div><div class="inner" style="margin-top:28px">
+        <ul class="toc">${ISSUE.items.map((it,i)=>`<li><button data-go="n${pad(i+1)}"><span>第${pad(i+1)}話</span>${esc(plain(it.title))}</button></li>`).join("")}</ul>
+        <p class="turn">横にめくると、選び方</p></div></article>
+      <article class="koma"><div class="ep">あとがき（選び方）</div><div class="inner" style="margin-top:28px">
+        <ol class="rules">${rulesText().map(r=>`<li>${esc(r)}</li>`).join("")}</ol>
+        <p class="note">${EDITOR_NOTE}</p></div></article>
+    </div>
+  </section>`;
+  feed.innerHTML = html;
+}
+render();
+
+/* ===== カテゴリのタブ ===== */
+function renderTabs(active){
+  const counts = {all:ISSUE.items.length};
+  ISSUE.items.forEach(it=>counts[it.cat]=(counts[it.cat]||0)+1);
+  const list = [["all","ぜんぶ"],...Object.entries(CATS).map(([k,v])=>[k,v[0]])];
+  $("#tabs").innerHTML = list.filter(([k])=>counts[k]).map(([k,l])=>`<button data-cat="${k}" aria-pressed="${k===active}">${l}<i>${counts[k]}</i></button>`).join("");
+}
+renderTabs("all");
+$("#tabs").addEventListener("click",e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  const c = b.dataset.cat;
+  renderTabs(c);
+  feed.querySelectorAll(".card").forEach(s=>{ s.hidden = !(c==="all" || s.dataset.cat===c || s.id==="end"); });
+  feed.scrollTo({top:0});
+  current = feed.querySelector(".card:not([hidden])");
+  updateCount();
+});
+
+/* ===== 話数カウンタ ===== */
+let current = null;
+const storyCards = () => [...feed.querySelectorAll(".card:not([hidden]):not(#end)")];
+function updateCount(){
+  const vs = storyCards();
+  $("#tot").textContent = vs.length;
+  const atEnd = current && current.id==="end";
+  $("#cur").textContent = atEnd ? vs.length : Math.max(1, vs.indexOf(current)+1);
+  $("#nextLabel").textContent = atEnd ? "第1話にもどる ▲" : "次の話へ ▼";
+}
+/* プレビュー環境などでは履歴の書き換えができないので、失敗しても止めない */
+function setHash(id){ try{ history.replaceState(null,"","#"+id); }catch(_){} }
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ current=e.target; updateCount(); if(current.id!=="end") setHash(current.id); } });
+},{root:feed,threshold:.6});
+feed.querySelectorAll(".card").forEach(c=>io.observe(c));
+
+$("#nextBtn").addEventListener("click",()=>{
+  const all = [...feed.querySelectorAll(".card:not([hidden])")];
+  const i = all.indexOf(current);
+  const target = (current && current.id==="end") ? all[0] : all[Math.min(i+1, all.length-1)];
+  target.scrollIntoView({behavior:"smooth"});
+});
+
+/* ===== コマ送りの印 ===== */
+feed.querySelectorAll(".card").forEach(card=>{
+  const p = card.querySelector(".panels"), dots = card.querySelectorAll(".pages i");
+  if(!dots.length) return;
+  p.addEventListener("scroll",()=>{
+    const k = Math.round(p.scrollLeft / (p.scrollWidth / dots.length));
+    dots.forEach((d,j)=>d.classList.toggle("on", j===k));
+  },{passive:true});
+});
+
+/* ===== シェア・目次・選び方 ===== */
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1800); }
+function pageUrl(){ const u = location.href.split("#")[0]; return /^https?:/.test(u) ? u : ""; }
+document.addEventListener("click",async e=>{
+  const s = e.target.closest("[data-share]");
+  if(s){
+    const base = pageUrl();
+    if(!base){ toast("公開後のページでシェアできます"); return; }
+    const url = base+"#"+s.dataset.share, title = s.closest(".card").getAttribute("aria-label");
+    try{
+      if(navigator.share){ await navigator.share({title, url}); }
+      else { await navigator.clipboard.writeText(url); toast("リンクをコピーしました"); }
+    }catch(_){ /* キャンセル時は何もしない */ }
+  }
+  const g = e.target.closest("[data-go]");
+  if(g) document.getElementById(g.dataset.go).scrollIntoView({behavior:"smooth"});
+});
+$("#howBtn").addEventListener("click",()=>{
+  const end = $("#end"); end.scrollIntoView({behavior:"smooth"});
+  setTimeout(()=>{ const p=end.querySelector(".panels"); p.scrollTo({left:p.scrollWidth,behavior:"smooth"}); },450);
+});
+
+/* #n03 などのリンクで開いたとき */
+if(location.hash){ const t=document.getElementById(location.hash.slice(1)); if(t) t.scrollIntoView(); }
+</script>
+</body>
+</html>
