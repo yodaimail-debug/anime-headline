@@ -15,6 +15,14 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://yodaimail-debug.github.io/anime-headline/og.png">
+<link rel="manifest" href="/anime-headline/manifest.webmanifest">
+<meta name="theme-color" content="#fffdf8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="業界ヘッドライン">
+<link rel="apple-touch-icon" href="/anime-headline/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/anime-headline/icons/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Dela+Gothic+One&display=swap" rel="stylesheet">
@@ -165,6 +173,15 @@ button.date::after{content:" ▾"}
 .ico svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .toast{position:fixed;left:50%;bottom:calc(var(--bottom) + 18px);transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;font-weight:700;padding:8px 14px;border-radius:99px;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
 .toast.on{opacity:1}
+/* ホーム画面に追加 */
+.app{display:grid;place-items:center}
+.app svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media (display-mode:standalone){.app{display:none}}
+.dlead{font-size:13.5px;font-weight:700;line-height:1.75}
+.steps{list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:8px}
+.steps li{counter-increment:st;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:10px 12px;font-size:13.5px;font-weight:700;line-height:1.6}
+.steps li::before{content:counter(st);width:28px;height:28px;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--num);font-size:13px}
+.installgo{width:100%;height:46px;border-radius:99px;background:var(--yellow);border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-weight:800;font-size:15px}
 
 /* パソコンではスマホ1台分の幅で中央に表示 */
 @media (min-width:520px){
@@ -181,7 +198,7 @@ button.date::after{content:" ▾"}
 <header>
   <div class="mast">
     <div class="logo"><span class="mark" aria-hidden="true"></span><b>アニメ業界<span>ヘッドライン</span></b></div>
-    <div class="right"><button class="date" id="gou" aria-label="バックナンバーを開く"></button><button class="help" id="howBtn" aria-label="この号の作り方">?</button></div>
+    <div class="right"><button class="date" id="gou" aria-label="バックナンバーを開く"></button><button class="help app" id="appBtn" aria-label="ホーム画面に追加"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M12 8.5v7M8.5 12h7"/></svg></button><button class="help" id="howBtn" aria-label="この号の作り方">?</button></div>
   </div>
   <div class="progress" id="progress" aria-hidden="true"></div>
   <nav class="chips" id="tabs" aria-label="ジャンル"></nav>
@@ -457,6 +474,28 @@ function closeDrawer(){ $("#dim").classList.remove("on"); $("#drawer").classList
 $("#dim").addEventListener("click",closeDrawer);
 $("#dclose").addEventListener("click",closeDrawer);
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
+
+/* ホーム画面に追加：アプリのように全画面で開ける。一度開いた号は電波が弱くても読める */
+let installEvt = null;
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; });
+window.addEventListener("appinstalled", () => { installEvt = null; closeDrawer(); toast("ホーム画面に追加しました"); });
+const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+if (navigator.standalone === true) $("#appBtn").style.display = "none";
+$("#appBtn").addEventListener("click", () => {
+  const go = installEvt ? `<button class="installgo" id="installGo">ホーム画面に追加する</button>` : "";
+  const steps = isIOS
+    ? `<ol class="steps"><li>画面下（iPadは右上）の共有ボタン（□に↑）を押す</li><li>メニューを下にスクロールして「ホーム画面に追加」を押す</li><li>右上の「追加」を押す</li></ol>`
+    : `<ol class="steps"><li>ブラウザのメニュー（︙ や … のボタン）を開く</li><li>「ホーム画面に追加」または「アプリをインストール」を押す</li><li>確認が出たら「追加」（または「インストール」）を押す</li></ol>`;
+  const other = isIOS
+    ? `<p class="dnote">AndroidやパソコンのChromeでは、ブラウザのメニュー（︙）から「ホーム画面に追加」または「アプリをインストール」を選びます。</p>`
+    : `<p class="dnote">iPhoneやiPadのSafariでは、共有ボタン（□に↑）から「ホーム画面に追加」を選びます。</p>`;
+  openDrawer("ホーム画面に追加", `<p class="dlead">アプリのように、ホーム画面のアイコンから全画面で開けます。一度開いた号は、電波が弱い所でも読めます。</p>${go}${steps}${other}`);
+  const b = $("#installGo");
+  if (b) b.addEventListener("click", async () => { installEvt.prompt(); try { await installEvt.userChoice; } catch (_) {} installEvt = null; closeDrawer(); });
+});
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  window.addEventListener("load", () => navigator.serviceWorker.register("/anime-headline/sw.js", { scope: "/anime-headline/" }).catch(() => {}));
+}
 
 /* ラインナップ：どこからでも各ニュースへ */
 $("#listBtn").addEventListener("click",()=>{
