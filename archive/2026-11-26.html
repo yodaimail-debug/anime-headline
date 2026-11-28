@@ -177,6 +177,25 @@ button.date::after{content:" ▾"}
 .app{display:grid;place-items:center}
 .app svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 @media (display-mode:standalone){.app{display:none}}
+/* ボタンが4つ並ぶので、狭い画面ではロゴとボタンを少し詰める */
+.logo b{overflow:hidden;text-overflow:clip}
+@media (max-width:430px){
+  .mast{padding-left:12px;padding-right:12px}
+  .logo{gap:7px}
+  .logo b{font-size:13.5px}
+  .right{gap:5px}
+  .date{font-size:11.5px;padding:5px 9px}
+  button.date::after{content:""}
+  .help{width:28px;height:28px}
+}
+@media (max-width:380px){
+  .mark{display:none}
+  .logo b{font-size:13px}
+}
+@media (max-width:350px){
+  .logo b{font-size:11.5px}
+  .date{font-size:10.5px;padding:4px 7px}
+}
 .dlead{font-size:13.5px;font-weight:700;line-height:1.75}
 .steps{list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:8px}
 .steps li{counter-increment:st;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:10px 12px;font-size:13.5px;font-weight:700;line-height:1.6}
