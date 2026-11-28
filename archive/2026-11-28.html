@@ -197,9 +197,9 @@ button.date::after{content:" ▾"}
   .date{font-size:10.5px;padding:4px 7px}
 }
 .dlead{font-size:13.5px;font-weight:700;line-height:1.75}
-.steps{list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:8px}
-.steps li{counter-increment:st;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:10px 12px;font-size:13.5px;font-weight:700;line-height:1.6}
-.steps li::before{content:counter(st);width:28px;height:28px;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--num);font-size:13px}
+.addsteps{list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:8px}
+.addsteps li{counter-increment:st;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:10px 12px;font-size:13.5px;font-weight:700;line-height:1.6}
+.addsteps li::before{content:counter(st);width:28px;height:28px;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--num);font-size:13px}
 .installgo{width:100%;height:46px;border-radius:99px;background:var(--yellow);border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-weight:800;font-size:15px}
 
 /* パソコンではスマホ1台分の幅で中央に表示 */
@@ -503,8 +503,8 @@ if (navigator.standalone === true) $("#appBtn").style.display = "none";
 $("#appBtn").addEventListener("click", () => {
   const go = installEvt ? `<button class="installgo" id="installGo">ホーム画面に追加する</button>` : "";
   const steps = isIOS
-    ? `<ol class="steps"><li>画面下（iPadは右上）の共有ボタン（□に↑）を押す</li><li>メニューを下にスクロールして「ホーム画面に追加」を押す</li><li>右上の「追加」を押す</li></ol>`
-    : `<ol class="steps"><li>ブラウザのメニュー（︙ や … のボタン）を開く</li><li>「ホーム画面に追加」または「アプリをインストール」を押す</li><li>確認が出たら「追加」（または「インストール」）を押す</li></ol>`;
+    ? `<ol class="addsteps"><li>画面下（iPadは右上）の共有ボタン（□に↑）を押す</li><li>メニューを下にスクロールして「ホーム画面に追加」を押す</li><li>右上の「追加」を押す</li></ol>`
+    : `<ol class="addsteps"><li>ブラウザのメニュー（︙ や … のボタン）を開く</li><li>「ホーム画面に追加」または「アプリをインストール」を押す</li><li>確認が出たら「追加」（または「インストール」）を押す</li></ol>`;
   const other = isIOS
     ? `<p class="dnote">AndroidやパソコンのChromeでは、ブラウザのメニュー（︙）から「ホーム画面に追加」または「アプリをインストール」を選びます。</p>`
     : `<p class="dnote">iPhoneやiPadのSafariでは、共有ボタン（□に↑）から「ホーム画面に追加」を選びます。</p>`;
