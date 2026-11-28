@@ -180,7 +180,11 @@ button.date::after{content:" ▾"}
 .app{display:grid;place-items:center}
 .app svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 @media (display-mode:standalone){.app{display:none}}
-/* ボタンが4つ並ぶので、狭い画面ではロゴとボタンを少し詰める */
+/* 言語切り替え */
+.lang{font-family:var(--num);font-size:10.5px;letter-spacing:.02em}
+.langnote{margin:0 0 2px;font-size:11.5px;font-weight:700;color:var(--sub);text-align:center}
+html[lang="en"] .jp{word-break:normal;overflow-wrap:break-word;line-break:auto;hyphens:auto}
+/* ボタンが5つ並ぶので、狭い画面ではロゴとボタンを少し詰める */
 .logo b{overflow:hidden;text-overflow:clip}
 @media (max-width:430px){
   .mast{padding-left:12px;padding-right:12px}
@@ -190,6 +194,8 @@ button.date::after{content:" ▾"}
   .date{font-size:11.5px;padding:5px 9px}
   button.date::after{content:""}
   .help{width:28px;height:28px}
+  .right{gap:4px}
+  #gou .wd{display:none}
 }
 @media (max-width:380px){
   .mark{display:none}
@@ -219,8 +225,8 @@ button.date::after{content:" ▾"}
 <body>
 <header>
   <div class="mast">
-    <div class="logo"><span class="mark" aria-hidden="true"></span><b>アニメ業界<span>ヘッドライン</span></b></div>
-    <div class="right"><button class="date" id="gou" aria-label="バックナンバーを開く"></button><button class="help app" id="appBtn" aria-label="ホーム画面に追加"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M12 8.5v7M8.5 12h7"/></svg></button><button class="help" id="howBtn" aria-label="この号の作り方">?</button></div>
+    <div class="logo"><span class="mark" aria-hidden="true"></span><b id="logoText">アニメ業界<span>ヘッドライン</span></b></div>
+    <div class="right"><button class="date" id="gou" aria-label="バックナンバーを開く"></button><button class="help lang" id="langBtn" aria-label="English">EN</button><button class="help app" id="appBtn" aria-label="ホーム画面に追加"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M12 8.5v7M8.5 12h7"/></svg></button><button class="help" id="howBtn" aria-label="この号の作り方">?</button></div>
   </div>
   <div class="progress" id="progress" aria-hidden="true"></div>
   <nav class="chips" id="tabs" aria-label="ジャンル"></nav>
@@ -247,6 +253,70 @@ button.date::after{content:" ▾"}
 /* ===== 号データ（毎朝ここだけ差し替える） ===== */
 const ISSUE = {"date": "2026-11-27", "range": "11月21–27日の報道・投稿", "freshnessNote": "前号（11/26号）と重なる話題は外したため本数を減らしています。一部に3–6日前の発表（KADOKAWAの合弁、エディアの出資など）を含みます", "items": [{"cat": "news", "area": "調査", "sec": 40, "title": "業界志望の学生、やりがい肯定<em>94.7%<\/em>も給与は6割が低評価", "lead": "ワクワークの「アニメ業界就職意識調査2026」（有効回答302）で、仕事のやりがいを肯定的に見る学生が94.7%。一方で給与水準は61.9%、労働環境は58.2%が否定的だった。", "src": [["KAI-YOU", "https://kai-you.net/article/97248", "11月25日"]], "gist": "アニメ業界を目指す学生への調査で、仕事への期待の高さと、待遇への不安が同時に表れた。", "details": ["調査は9月11–30日、中学生から大学院生と海外在住者を対象にWebで実施。", "希望職種は「作画・動画・仕上げ」が62.3%で最多（複数回答）。"], "dsrc": [["KAI-YOU", "https://kai-you.net/article/97248"]], "voices": [{"kind": "分析・データ", "head": "関心度は8割が最高評価", "who": "ワクワーク", "role": "調査実施企業", "text": "業界への関心度を5段階で聞くと、79.1%が最高の5を選んだと報告している。", "src": [["KAI-YOU", "https://kai-you.net/article/97248"]]}]}, {"cat": "news", "area": "海外展開", "sec": 35, "title": "KADOKAWA、香港メディアリンクと<em>合弁2社<\/em>", "lead": "KADOKAWAが香港のアニメ配給会社メディアリンクと、香港とタイに合弁会社を設立することで合意。香港側は日韓を除くアジアでキャラクターのライセンス事業を担う。", "src": [["アニメーションビジネス・ジャーナル", "https://animationbusiness.info/archives/17261", "11月21日"]], "gist": "キャラクターの権利ビジネスと小売りを、アジアで現地企業と組んで広げる。", "details": ["最初の案件は「パンどろぼう」。タイの合弁はポップアップストアなど小売りを担う。", "KADOKAWAはタイで既にKADOKAWA AMARINを展開。今回の出資額は公表されていない。"], "dsrc": [["アニメーションビジネス・ジャーナル", "https://animationbusiness.info/archives/17261"]], "voices": []}, {"cat": "news", "area": "資金", "sec": 30, "title": "エディア、アニメ製作委員会に<em>2.5億円<\/em>出資へ", "lead": "エディアが、自社グループの持つマンガやライトノベルなどのアニメ化に向け、製作委員会へ2億5000万円を出資する予定と発表。作品名や幹事会社は明らかにしていない。", "src": [["PR TIMES", "https://prtimes.jp/main/html/rd/p/000001239.000021592.html", "11月24日"]], "gist": "ゲームや出版を手がける企業が、自社の原作を使うアニメの製作費の一部を出す。", "details": ["同社のアニメ事業は2025年8月に始動。今期（2027年2月期）業績への影響は軽微とした。"], "dsrc": [["PR TIMES", "https://prtimes.jp/main/html/rd/p/000001239.000021592.html"]], "voices": []}, {"cat": "news", "area": "データ", "sec": 30, "title": "「薬屋のひとりごと」第3期、録画数<em>8週連続<\/em>首位", "lead": "DiMORAの録画データによる秋アニメ録画数ランキング（11月第4週）で、「薬屋のひとりごと」第3期が8週連続1位。2位「ホタルの嫁入り」、3位「ドラゴンボール超 ビルス」と続いた。", "src": [["アニメハック", "https://anime.eiga.com/news/column/konki_ranking/127929/", "11月25日"]], "gist": "今期のテレビアニメで、録画される数が最も多い作品の首位が8週続いている。", "details": ["4位は「転生貴族、鑑定スキルで成り上がる」第3期、5位は「氷の城壁」第2期。", "集計はDiMORAの録画データで、首都圏の地上波放送が対象。"], "dsrc": [["アニメハック", "https://anime.eiga.com/news/column/konki_ranking/127929/"]], "voices": []}, {"cat": "work", "area": "新作", "sec": 30, "title": "「美味しんぼ」35年ぶり<em>新作<\/em>テレビアニメ", "lead": "「美味しんぼ」の新作テレビアニメが2027年1月4日からテレビ東京で始まる。監督は西田健一、制作はシンエイ動画で、旧作の続きを描く。", "src": [["MANTANWEB", "https://mantan-web.jp/article/20261125dog00m200078000a.html", "11月26日"]], "gist": "1988–92年に放送された料理マンガのアニメが、続編として戻ってくる。", "details": ["アニメーション制作はSynergySPとベガエンタテイメント。山岡士郎役は阿座上洋平。"], "dsrc": [["MANTANWEB", "https://mantan-web.jp/article/20261125dog00m200078000a.html"]], "voices": []}, {"cat": "work", "area": "新作", "sec": 25, "title": "スタジオリングス制作<em>「異世界喰滅のサメ」<\/em>アニメ化", "lead": "くぼけんのマンガ「異世界喰滅のサメ」のテレビアニメ化が発表された。監督は深瀬重、シリーズ構成は村越繁、制作はスタジオリングス。放送時期は未発表。", "src": [["MANTANWEB", "https://mantan-web.jp/article/20261126dog00m200091000a.html", "11月27日"]], "gist": "召喚士が異世界にサメを呼び出すマンガが、テレビアニメになる。", "details": ["キャラクターデザインは郁山想、音楽は井内啓二。特報映像も公開された。"], "dsrc": [["MANTANWEB", "https://mantan-web.jp/article/20261126dog00m200091000a.html"]], "voices": []}, {"cat": "work", "area": "新作", "sec": 25, "title": "「結界師の一輪華」2027年<em>1月6日<\/em>開始", "lead": "テレビアニメ「結界師の一輪華」が2027年1月6日に始まり、第1話は1時間で放送する。追加キャストに小林千晃、江口拓也。OPはなにわ男子が担当する。", "src": [["アニメハック", "https://anime.eiga.com/news/127943/", "11月26日"]], "gist": "恋愛小説が原作の冬アニメで、放送開始日と初回1時間の放送が決まった。", "details": ["追加キャストの発表とあわせ、OPテーマの担当アーティストも明らかにした。"], "dsrc": [["アニメハック", "https://anime.eiga.com/news/127943/"]], "voices": []}, {"cat": "work", "area": "新作", "sec": 25, "title": "「渡り鳥とカタツムリ」2027年<em>夏<\/em>アニメ化", "lead": "高津マコトのマンガ「渡り鳥とカタツムリ」のテレビアニメが2027年夏に放送される。会社員と絵本作家がキャンピングカーで旅をする物語。", "src": [["アニメハック", "https://anime.eiga.com/news/127954/", "11月26日"]], "gist": "2人の大人がキャンピングカーで各地を巡る旅マンガが、テレビアニメになる。", "details": ["制作会社やスタッフの詳細は今後発表される見込み。"], "dsrc": [["アニメハック", "https://anime.eiga.com/news/127954/"]], "voices": []}, {"cat": "voice", "area": "監督", "sec": 30, "title": "ヒロアカ監督・中山奈緒美、<em>監督育成<\/em>の違いに言及", "lead": "「僕のヒーローアカデミア」ファイナルシーズン監督の中山奈緒美さんがXで、会社ごとに演出の扱いは違い、MADHOUSEには次の監督候補に経験を積ませる目的があったと投稿した。", "src": [["X", "https://x.com/mogu703", "11月26日"]], "gist": "演出から監督へ育つ道筋が、スタジオによって違うという現場の実感が共有された。", "details": [], "voices": [{"kind": "当事者の声", "head": "経験を積ませる仕組み", "who": "中山奈緒美", "role": "アニメーション監督", "text": "MADHOUSEでは次世代の監督候補に確実に経験を積ませる狙いがあり、誇りを持つ人が多かったと振り返った。", "src": [["X", "https://x.com/mogu703"]]}]}, {"cat": "voice", "area": "作画・演出", "sec": 30, "title": "作監・進行の役割、<em>現場から<\/em>発信相次ぐ", "lead": "演出の山口よしみさんは、作画監督が「誰かがやらないと回らない」役になりつつあると投稿。フリーアニメーターで演出の安西俊之さんは、制作進行の先の進路の難しさに触れた。", "src": [["X", "https://x.com/Yoshimi08/status/2126104038769053800", "11月27日"], ["X", "https://x.com/syun2005a2/status/2126011326682329216", "11月27日"]], "gist": "人手が足りない現場で、作画監督や制作進行の役目と育ち方を考える声が続いた。", "details": [], "voices": [{"kind": "現場の声", "head": "作監が名ばかりに", "who": "山口よしみ", "role": "演出・絵コンテ・原画", "text": "本来は描ける段階の人が任された作画監督を、工程の都合で誰かに頼む例が増え、衝突も起きると書いた。", "src": [["X", "https://x.com/Yoshimi08/status/2126104038769053800"]]}, {"kind": "現場の声", "head": "進行の先を考える必要", "who": "安西俊之", "role": "アニメーター・演出", "text": "制作進行はそのまま続けにくく、プロデューサーや演出など先の道を考える必要があると語った。", "src": [["X", "https://x.com/syun2005a2/status/2126011326682329216"]]}]}, {"cat": "voice", "area": "脚本・制作", "sec": 25, "title": "「てつりょー！」8話、<em>脚本と進行<\/em>を1人で担当", "lead": "TVアニメ「てつりょー！ meet with 鉄道むすめ」第8話で、一色柊哉さんが脚本と制作進行の両方を担当したとXで報告。設定制作なども含め、EDに4か所名前が載ったという。", "src": [["X", "https://x.com/isshiki_1205/status/2125975857533722744", "11月27日"]], "gist": "若手スタッフが、1つの話数に脚本から制作まで関われた喜びを伝えた。", "details": [], "voices": [{"kind": "当事者の声", "head": "脚本から進行まで携わる", "who": "一色柊哉", "role": "脚本・制作進行", "text": "本読みの関係者や事業者に感謝し、脚本から制作進行まで携われて幸せだったと投稿した。", "src": [["X", "https://x.com/isshiki_1205/status/2125975857533722744"]]}, {"kind": "当事者の声", "head": "公式も8話スタッフを発表", "who": "「てつりょー！」公式", "role": "作品公式アカウント", "text": "第8話のスタッフとして脚本・一色柊哉、絵コンテと演出・西尾良寛らを発表した。", "src": [["X", "https://x.com/tetsuryo_anime/status/2126103720333119938"]]}]}]};
 
+/* ===== 言語（日本語 / English）。?lang= ＞ 前回の選択 ＞ ブラウザの言語 の順で決める ===== */
+const LANG = (()=>{
+  let q = null; try{ q = new URLSearchParams(location.search).get("lang"); }catch(_){}
+  if(q==="en"||q==="ja"){ try{ localStorage.setItem("ahl-lang",q); }catch(_){} return q; }
+  try{ const v = localStorage.getItem("ahl-lang"); if(v==="en"||v==="ja") return v; }catch(_){}
+  return /^ja\b/i.test(navigator.language||"ja") ? "ja" : "en";
+})();
+const EN = LANG==="en";
+const HAS_EN = ISSUE.items.every(it=>it.en && it.en.title);
+document.documentElement.lang = EN ? "en" : "ja";
+/* 表示用の記事データ：英語のときは en の中身で上書きする（出典やURLは共通） */
+const VIEW = ISSUE.items.map(it=>{
+  if(!EN || !it.en) return it;
+  const e = it.en;
+  return {...it, ...e,
+    details: e.details || it.details,
+    voices: it.voices.map((v,j)=>({...v, ...((e.voices||[])[j]||{})}))};
+});
+const T = EN ? {
+  title:"Anime Industry Headlines", logo:'Anime <span>Headlines</span>', genre:"Sections",
+  cats:{news:"Industry",work:"New titles",voice:"From the field"}, all:"All",
+  kind:{"当事者の声":"Firsthand","現場の声":"From the field","専門家の見解":"Expert view","分析・データ":"By the numbers","反響":"Reactions"},
+  src:"Source: ", flip:"Swipe for context", summary:"Summary", context:"Context", voices:"Voices", share:"Share",
+  end:"Lineup & notes", lineup:"In this issue", flipEnd:"Swipe for editor's notes", editors:"From the editors",
+  next:"Next", top:"Back to top", list:"Open lineup", prev:"Previous", close:"Close",
+  copied:"Link copied", notYet:"Sharing works on the published page",
+  lineupTitle:"In this issue", backTitle:"Back issues", searching:"Looking…", latest:"Latest", readLatest:"Read the latest issue",
+  read:"Read", yest:["Yesterday","2 days ago"], daysAgo:k=>k+" days ago", nowReading:l=>`You are reading the ${l} issue.`,
+  noBack:"No back issues yet. Each morning's issue is kept here for 7 days.",
+  jaOnly:"This issue is available in Japanese only.",
+  langBtn:"JA", langLabel:"日本語で読む",
+  appBtn:"Add to Home Screen", appTitle:"Add to Home Screen", appGo:"Add to Home Screen", added:"Added to your Home Screen",
+  appLead:"Open it like an app, full screen, from an icon on your Home Screen. Issues you have opened stay readable even with a weak signal.",
+  appIOS:["Tap the Share button (□ with ↑) at the bottom of the screen (top right on iPad)","Scroll down and tap “Add to Home Screen”","Tap “Add” at the top right"],
+  appOther:["Open the browser menu (︙ or …)","Tap “Add to Home screen” or “Install app”","Confirm with “Add” (or “Install”)"],
+  appIOSNote:"In Chrome on Android or a computer, choose “Add to Home screen” or “Install app” from the browser menu (︙).",
+  appOtherNote:"In Safari on iPhone or iPad, use the Share button (□ with ↑) and choose “Add to Home Screen”.",
+  how:"How this issue is made", gouLabel:"Open back issues"
+} : {
+  title:"アニメ業界ヘッドライン", logo:'アニメ業界<span>ヘッドライン</span>', genre:"ジャンル",
+  cats:{news:"業界ニュース",work:"新作・作品",voice:"現場から"}, all:"ぜんぶ",
+  kind:{"当事者の声":"本人コメント","現場の声":"現場から","専門家の見解":"識者のひとこと","分析・データ":"数字で見る","反響":"読者の声"},
+  src:"出典：", flip:"横にめくると解説", summary:"あらすじ", context:"解説", voices:"コメント", share:"シェア",
+  end:"ラインナップ・編集部より", lineup:"今号のラインナップ", flipEnd:"横にめくると編集部より", editors:"編集部より",
+  next:"次のカットへ", top:"最初から", list:"ラインナップを開く", prev:"前のカット", close:"閉じる",
+  copied:"リンクをコピーしました", notYet:"公開後のページでシェアできます",
+  lineupTitle:"今号のラインナップ", backTitle:"バックナンバー", searching:"さがしています…", latest:"最新", readLatest:"最新号を読む",
+  read:"読む", yest:["昨日","一昨日"], daysAgo:k=>k+"日前", nowReading:l=>`いま読んでいるのは ${l} です。`,
+  noBack:"まだ読める過去の号がありません。公開ページでは、毎朝の号がここに7日分たまっていきます。",
+  jaOnly:"",
+  langBtn:"EN", langLabel:"Read in English",
+  appBtn:"ホーム画面に追加", appTitle:"ホーム画面に追加", appGo:"ホーム画面に追加する", added:"ホーム画面に追加しました",
+  appLead:"アプリのように、ホーム画面のアイコンから全画面で開けます。一度開いた号は、電波が弱い所でも読めます。",
+  appIOS:["画面下（iPadは右上）の共有ボタン（□に↑）を押す","メニューを下にスクロールして「ホーム画面に追加」を押す","右上の「追加」を押す"],
+  appOther:["ブラウザのメニュー（︙ や … のボタン）を開く","「ホーム画面に追加」または「アプリをインストール」を押す","確認が出たら「追加」（または「インストール」）を押す"],
+  appIOSNote:"AndroidやパソコンのChromeでは、ブラウザのメニュー（︙）から「ホーム画面に追加」または「アプリをインストール」を選びます。",
+  appOtherNote:"iPhoneやiPadのSafariでは、共有ボタン（□に↑）から「ホーム画面に追加」を選びます。",
+  how:"この号の作り方", gouLabel:"バックナンバーを開く"
+};
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const WK_EN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+/* 「11月27日」→「Nov 27」 */
+const dateEn = s => EN ? String(s).replace(/(\d{1,2})月(\d{1,2})日/g,(_,m,d)=>`${MON[m-1]} ${+d}`) : s;
+
 /* ===== この号の作り方（毎号共通。{…} は号データから自動で埋まる） ===== */
 const TARGET = 20;
 const MIX = {news:.55, work:.30, voice:.15};
@@ -259,19 +329,31 @@ const RULES = [
   "<b>明るい話題</b>うれしいニュースを毎号2本以上入れる。",
   "<b>現場から</b>クレジットのある作り手本人が公開している発信だけ。噂、リーク、発売前のネタバレは載せない。"
 ];
+const RULES_EN = [
+  "<b>Freshness</b>Mostly news from the last 24 hours. This issue covers {range}; {fresh}.",
+  "<b>Sources</b>Official company announcements, wire services and anime trade media come first. Stories that rest only on social media go to “From the field”.",
+  "<b>What we pick</b>Whether money, structures or working conditions in the anime industry moved: studios and capital, streaming and box office numbers, changes on the production floor. No gossip or flame wars.",
+  "<b>Headlines</b>Substance over hype. Quiet but important stories still get a clear headline.",
+  "<b>Mix</b>About 20 stories per issue, split roughly 55:30:15 between industry news, new titles and voices from the field ({target} stories would be {targetMix}). This issue: {n} stories ({mix}).",
+  "<b>Good news</b>At least two pieces of good news in every issue.",
+  "<b>From the field</b>Only public posts by credited creators themselves. No rumors, leaks or spoilers before release."
+];
+const EDITOR_NOTE_EN = "For each story we try to gather two comments or analyses from different positions and outlets, and we do not pad when we cannot find them. Every item is a quick summary, so please check the linked sources for details. Story selection and summaries are made by AI (Anthropic's Claude) while checking the sources; the English edition is translated by the same AI. If anything differs, the source is correct.";
+const VOICE_NOTE_EN = "Comments are summaries of what was said or analyzed, not direct quotes. ";
+const FEW_NOTE_EN = "We could only confirm one voice from a different position this time, so we did not add more.";
 const EDITOR_NOTE = "各カットのコメントや分析は、なるべく違う立場・違う媒体から2つずつ集めています。見つからないときは無理に足しません。どの記事も速報としての要約なので、くわしくは出典のリンク先で確かめてください。記事選びと要約は、AI（Anthropic社のClaude）が出典を確認しながら作っています。食い違いがあれば、出典の内容を正としてください。";
 const VOICE_NOTE = "コメントは発言や分析の要約で、そのままの引用ではありません。";
 const FEW_NOTE = "今回は別の立場の声を1つしか確認できなかったため、無理に増やしていません。";
 
 /* ===== 以下は描画（毎日変えない） ===== */
-const CATS = {news:["業界ニュース","--c-news"], work:["新作・作品","--c-work"], voice:["現場から","--c-voice"]};
-const KIND = {"当事者の声":"本人コメント","現場の声":"現場から","専門家の見解":"識者のひとこと","分析・データ":"数字で見る","反響":"読者の声"};
+const CATS = {news:[T.cats.news,"--c-news"], work:[T.cats.work,"--c-work"], voice:[T.cats.voice,"--c-voice"]};
+const KIND = T.kind;
 const $ = s => document.querySelector(s);
 const feed = $("#feed");
 const pad = n => String(n).padStart(2,"0");
 const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const plain = s => String(s).replace(/<[^>]+>/g,"");
-const tc = sec => `尺 ${Math.floor(sec/60)}:${pad(sec%60)}`;
+const tc = sec => `${EN?"":"尺 "}${Math.floor(sec/60)}:${pad(sec%60)}`;
 
 /* 日本語を文節ごとに区切り、文節の切れ目でだけ改行する */
 const SEG = (typeof Intl!=="undefined" && Intl.Segmenter) ? new Intl.Segmenter("ja",{granularity:"word"}) : null;
@@ -287,7 +369,7 @@ const NUMGLUE = (cur,w) =>
   (/[一-鿿々]$/.test(cur) && /^[A-Za-z]/.test(w));
 function phraseText(str){
   str = String(str);
-  if(!SEG) return esc(str);
+  if(!SEG || EN) return esc(str);
   const out = []; let cur = "";
   for(const {segment:w} of SEG.segment(str)){
     if(cur && (GLUE.test(w) || OPEN.test(cur) || NUMGLUE(cur,w))) cur += w;
@@ -303,22 +385,24 @@ const phraseTitle = t => String(t).split(/(<em>.*?<\/em>)/).map(part=>{
   const nextFirst = (arr[i+1]||"").replace(/^<em>/,"").charAt(0);
   return acc + h + (i<arr.length-1 && !GLUE.test(nextFirst) ? "<wbr>" : "");
 },"");
-const srcHtml = arr => arr.map(([n,u,d]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a>${d?"・"+esc(d):""}`).join("　");
+const srcHtml = arr => arr.map(([n,u,d]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a>${d?(EN?", ":"・")+esc(dateEn(d)):""}`).join(EN?" / ":"　");
 
 (function(){
   const dt = new Date(ISSUE.date+"T12:00:00+09:00");
-  const w = "日月火水木金土"[dt.getDay()];
   const [, m, d] = ISSUE.date.split("-").map(Number);
-  $("#gou").textContent = `${m}/${d}(${w})号`;
+  $("#gou").innerHTML = EN ? `${MON[m-1]} ${d}<span class="wd"> (${WK_EN[dt.getDay()]})</span>` : `${m}/${d}<span class="wd">(${"日月火水木金土"[dt.getDay()]})</span>号`;
 })();
 
 function rulesHtml(){
   const c = {news:0, work:0, voice:0};
   ISSUE.items.forEach(it=>c[it.cat]++);
-  const label = o => `業界ニュース${o.news}・新作/作品${o.work}・現場から${o.voice}`;
+  const label = o => EN ? `industry ${o.news}, new titles ${o.work}, from the field ${o.voice}` : `業界ニュース${o.news}・新作/作品${o.work}・現場から${o.voice}`;
   const t = {news:Math.round(TARGET*MIX.news), work:Math.round(TARGET*MIX.work)}; t.voice = TARGET-t.news-t.work;
-  const map = {range:ISSUE.range, fresh:ISSUE.freshnessNote||"ほぼすべてが直近24時間の情報", target:TARGET, targetMix:label(t), n:ISSUE.items.length, mix:label(c)};
-  return RULES.map(r=>{
+  const E = (EN && ISSUE.en) || {};
+  const map = EN
+    ? {range:E.range||ISSUE.range, fresh:E.freshnessNote||(ISSUE.freshnessNote?ISSUE.freshnessNote:"almost everything is from the last 24 hours"), target:TARGET, targetMix:label(t), n:ISSUE.items.length, mix:label(c)}
+    : {range:ISSUE.range, fresh:ISSUE.freshnessNote||"ほぼすべてが直近24時間の情報", target:TARGET, targetMix:label(t), n:ISSUE.items.length, mix:label(c)};
+  return (EN?RULES_EN:RULES).map(r=>{
     const filled = r.replace(/\{(\w+)\}/g,(_,k)=>map[k]);
     const [head, ...rest] = filled.split("</b>");
     return `<li class="jp">${head}</b>${phraseText(rest.join("</b>"))}</li>`;
@@ -334,7 +418,7 @@ const shareIcon = `<svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 
 
 function render(){
   let html = "";
-  ISSUE.items.forEach((it,i)=>{
+  VIEW.forEach((it,i)=>{
     const n = i+1, [catName, color] = CATS[it.cat];
     const pages = [];
     const more = it.gist || it.details.length || it.voices.length;
@@ -342,58 +426,72 @@ function render(){
       <span class="area">${esc(it.area)}</span>
       <h2 class="jp">${phraseTitle(it.title)}</h2>
       <p class="lead jp">${phraseText(it.lead)}</p>
-      <p class="src">出典：${srcHtml(it.src)}</p>
-      ${more?'<button class="hint" data-flip>横にめくると解説</button>':""}
+      <p class="src">${T.src}${srcHtml(it.src)}</p>
+      ${more?`<button class="hint" data-flip>${T.flip}</button>`:""}
     </div></section>`);
-    const dens = n => n<90 ? "d-s" : n>210 ? "d-l" : "d-m";
+    const dens = n => { n = EN ? n/2.3 : n; return n<90 ? "d-s" : n>210 ? "d-l" : "d-m"; };
     if(it.gist || it.details.length){
       const len = (it.gist||"").length + it.details.join("").length;
       pages.push(`<section class="page ${dens(len)}"><div class="inner">
-        ${it.gist?`<p class="label">あらすじ</p><p class="gist jp">${phraseText(it.gist)}</p>`:""}
-        ${it.details.length?`<p class="label">解説</p><ol class="steps">${it.details.map((d,j)=>`<li><span>${j+1}</span><p class="jp">${phraseText(d)}</p></li>`).join("")}</ol>`:""}
-        ${it.dsrc?`<p class="src">出典：${srcHtml(it.dsrc)}</p>`:""}
+        ${it.gist?`<p class="label">${T.summary}</p><p class="gist jp">${phraseText(it.gist)}</p>`:""}
+        ${it.details.length?`<p class="label">${T.context}</p><ol class="steps">${it.details.map((d,j)=>`<li><span>${j+1}</span><p class="jp">${phraseText(d)}</p></li>`).join("")}</ol>`:""}
+        ${it.dsrc?`<p class="src">${T.src}${srcHtml(it.dsrc)}</p>`:""}
       </div></section>`);
     }
     if(it.voices.length){
       const msgs = it.voices.map((v,j)=>`<div class="msg${j%2?" r":""}"><span class="av">${esc(v.who.slice(0,1))}</span>
         <div class="bubble"><span class="kind">${esc(KIND[v.kind]||v.kind)}</span><b class="jp">${phraseText(v.head)}</b><span class="jp">${phraseText(v.text)}</span>
-        <span class="who">${esc(v.who)}　<span>${esc(v.role)}</span></span>${v.src?`<span class="src">出典：${srcHtml(v.src)}</span>`:""}</div></div>`).join("");
+        <span class="who">${esc(v.who)}${EN?"  ":"　"}<span>${esc(v.role)}</span></span>${v.src?`<span class="src">${T.src}${srcHtml(v.src)}</span>`:""}</div></div>`).join("");
       const vlen = it.voices.map(v=>v.head+v.text).join("").length;
-      pages.push(`<section class="page ${dens(vlen*0.8)}"><div class="inner"><p class="label">コメント</p><div class="chat">${msgs}</div><p class="note">${VOICE_NOTE}${it.voices.length<2?FEW_NOTE:""}</p></div></section>`);
+      pages.push(`<section class="page ${dens(vlen*0.8)}"><div class="inner"><p class="label">${T.voices}</p><div class="chat">${msgs}</div><p class="note">${EN?VOICE_NOTE_EN:VOICE_NOTE}${it.voices.length<2?(EN?FEW_NOTE_EN:FEW_NOTE):""}</p></div></section>`);
     }
     html += `<article class="card" id="n${pad(n)}" data-cat="${it.cat}" style="--accent:var(${color})" aria-label="${esc(plain(it.title))}">
       <div class="sheet">
         <div class="slate"><span class="ico">${ICONS[it.cat]}</span><span class="cut">#${pad(n)}</span><span class="cat">${esc(catName)}</span><span class="tc">${tc(it.sec)}</span></div>
         <div class="pages">${pages.join("")}</div>
         <div class="foot"><div class="dots" aria-hidden="true">${pages.length>1?pages.map((_,j)=>`<i class="${j?"":"on"}"></i>`).join(""):""}</div>
-          <button class="share" data-share="n${pad(n)}">${shareIcon}シェア</button></div>
+          <button class="share" data-share="n${pad(n)}">${shareIcon}${T.share}</button></div>
       </div>
     </article>`;
   });
   html += `<article class="card" id="end" data-cat="all" style="--accent:var(--ink)">
     <div class="sheet">
-      <div class="slate"><span class="cut">END</span><span class="cat">ラインナップ・編集部より</span></div>
+      <div class="slate"><span class="cut">END</span><span class="cat">${T.end}</span></div>
       <div class="pages">
-        <section class="page"><div class="inner"><p class="h3">今号のラインナップ</p>
-          <ul class="lineup">${ISSUE.items.map((it,i)=>`<li><button data-go="n${pad(i+1)}" style="--c:var(${CATS[it.cat][1]})"><span>CUT ${pad(i+1)}</span><span class="jp">${phraseText(plain(it.title))}</span></button></li>`).join("")}</ul>
-          <button class="hint" data-flip>横にめくると編集部より</button>
+        <section class="page"><div class="inner"><p class="h3">${T.lineup}</p>
+          <ul class="lineup">${VIEW.map((it,i)=>`<li><button data-go="n${pad(i+1)}" style="--c:var(${CATS[it.cat][1]})"><span>CUT ${pad(i+1)}</span><span class="jp">${phraseText(plain(it.title))}</span></button></li>`).join("")}</ul>
+          <button class="hint" data-flip>${T.flipEnd}</button>
         </div></section>
-        <section class="page"><div class="inner"><p class="h3">編集部より</p>
+        <section class="page"><div class="inner"><p class="h3">${T.editors}</p>
           <ol class="rules">${rulesHtml()}</ol>
-          <p class="note jp">${phraseText(EDITOR_NOTE)}</p></div></section>
+          <p class="note jp">${phraseText(EN?EDITOR_NOTE_EN:EDITOR_NOTE)}</p></div></section>
       </div>
       <div class="foot"><div class="dots" aria-hidden="true"><i class="on"></i><i></i></div></div>
     </div>
   </article>`;
-  feed.innerHTML = html;
+  feed.innerHTML = (EN && !HAS_EN ? `<p class="langnote">${T.jaOnly}</p>` : "") + html;
 }
+/* 画面の固定文言 */
+document.title = T.title;
+$("#logoText").innerHTML = T.logo;
+$("#tabs").setAttribute("aria-label", T.genre);
+$("#listBtn").setAttribute("aria-label", T.list);
+$("#prevBtn").setAttribute("aria-label", T.prev);
+$("#dclose").setAttribute("aria-label", T.close);
+$("#howBtn").setAttribute("aria-label", T.how);
+$("#gou").setAttribute("aria-label", T.gouLabel);
+$("#appBtn").setAttribute("aria-label", T.appBtn);
+$("#langBtn").textContent = T.langBtn;
+$("#langBtn").setAttribute("aria-label", T.langLabel);
+$("#nextLabel").textContent = T.next;
 render();
+if(EN && !HAS_EN) setTimeout(()=>toast(T.jaOnly), 600);
 
 /* ===== ジャンル ===== */
 function renderTabs(active){
   const counts = {all:ISSUE.items.length};
   ISSUE.items.forEach(it=>counts[it.cat]=(counts[it.cat]||0)+1);
-  const list = [["all","ぜんぶ","--ink"],...Object.entries(CATS).map(([k,v])=>[k,v[0],v[1]])];
+  const list = [["all",T.all,"--ink"],...Object.entries(CATS).map(([k,v])=>[k,v[0],v[1]])];
   $("#tabs").innerHTML = list.filter(([k])=>counts[k]).map(([k,l,c])=>`<button data-cat="${k}" style="--dot:var(${c})" aria-pressed="${k===active}">${l}<i>${counts[k]}</i></button>`).join("");
 }
 renderTabs("all");
@@ -423,7 +521,7 @@ function update(){
   const idx = atEnd ? vs.length-1 : vs.indexOf(current);
   $("#tot").textContent = vs.length;
   $("#cur").textContent = atEnd ? "END" : idx+1;
-  $("#nextLabel").textContent = atEnd ? "最初から" : "次のカットへ";
+  $("#nextLabel").textContent = atEnd ? T.top : T.next;
   $("#nextIcon").textContent = atEnd ? "▲" : "▼";
   [...$("#progress").children].forEach((p,j)=>{ p.classList.toggle("on", !atEnd && j===idx); p.classList.toggle("done", atEnd || j<idx); });
 }
@@ -468,14 +566,15 @@ document.addEventListener("click",async e=>{
   if(s){
     /* 記事ごとのシェア用ページ（見出し入りのカード画像つき）を使う */
     const SITE = "https://yodaimail-debug.github.io/anime-headline/";
+    const enShare = EN && HAS_EN;
     const url = (ISSUE && /^\d{4}-\d{2}-\d{2}$/.test(ISSUE.date||""))
-      ? SITE+"s/"+ISSUE.date+"/"+s.dataset.share+".html"
+      ? SITE+"s/"+ISSUE.date+"/"+s.dataset.share+(enShare?"-en":"")+".html"
       : (pageUrl() ? pageUrl()+"#"+s.dataset.share : "");
-    if(!url){ toast("公開後のページでシェアできます"); return; }
+    if(!url){ toast(T.notYet); return; }
     const title = s.closest(".card").getAttribute("aria-label");
     try{
       if(navigator.share){ await navigator.share({title, url}); }
-      else { await navigator.clipboard.writeText(url); toast("リンクをコピーしました"); }
+      else { await navigator.clipboard.writeText(url); toast(T.copied); }
     }catch(_){ /* キャンセル時は何もしない */ }
     return;
   }
@@ -500,18 +599,14 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
 /* ホーム画面に追加：アプリのように全画面で開ける。一度開いた号は電波が弱くても読める */
 let installEvt = null;
 window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; });
-window.addEventListener("appinstalled", () => { installEvt = null; closeDrawer(); toast("ホーム画面に追加しました"); });
+window.addEventListener("appinstalled", () => { installEvt = null; closeDrawer(); toast(T.added); });
 const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 if (navigator.standalone === true) $("#appBtn").style.display = "none";
 $("#appBtn").addEventListener("click", () => {
-  const go = installEvt ? `<button class="installgo" id="installGo">ホーム画面に追加する</button>` : "";
-  const steps = isIOS
-    ? `<ol class="addsteps"><li>画面下（iPadは右上）の共有ボタン（□に↑）を押す</li><li>メニューを下にスクロールして「ホーム画面に追加」を押す</li><li>右上の「追加」を押す</li></ol>`
-    : `<ol class="addsteps"><li>ブラウザのメニュー（︙ や … のボタン）を開く</li><li>「ホーム画面に追加」または「アプリをインストール」を押す</li><li>確認が出たら「追加」（または「インストール」）を押す</li></ol>`;
-  const other = isIOS
-    ? `<p class="dnote">AndroidやパソコンのChromeでは、ブラウザのメニュー（︙）から「ホーム画面に追加」または「アプリをインストール」を選びます。</p>`
-    : `<p class="dnote">iPhoneやiPadのSafariでは、共有ボタン（□に↑）から「ホーム画面に追加」を選びます。</p>`;
-  openDrawer("ホーム画面に追加", `<p class="dlead">アプリのように、ホーム画面のアイコンから全画面で開けます。一度開いた号は、電波が弱い所でも読めます。</p>${go}${steps}${other}`);
+  const go = installEvt ? `<button class="installgo" id="installGo">${T.appGo}</button>` : "";
+  const steps = `<ol class="addsteps">${(isIOS?T.appIOS:T.appOther).map(x=>`<li>${x}</li>`).join("")}</ol>`;
+  const other = `<p class="dnote">${isIOS?T.appIOSNote:T.appOtherNote}</p>`;
+  openDrawer(T.appTitle, `<p class="dlead">${T.appLead}</p>${go}${steps}${other}`);
   const b = $("#installGo");
   if (b) b.addEventListener("click", async () => { installEvt.prompt(); try { await installEvt.userChoice; } catch (_) {} installEvt = null; closeDrawer(); });
 });
@@ -521,36 +616,44 @@ if ("serviceWorker" in navigator && location.protocol === "https:") {
 
 /* ラインナップ：どこからでも各ニュースへ */
 $("#listBtn").addEventListener("click",()=>{
-  const items = ISSUE.items.map((it,i)=>{
+  const items = VIEW.map((it,i)=>{
     const id = "n"+pad(i+1), on = current && current.id===id;
     return `<li><button data-go="${id}" data-close class="${on?"now":""}" style="--c:var(${CATS[it.cat][1]})"><span class="n">#${pad(i+1)}</span><span class="jp">${phraseText(plain(it.title))}</span><span class="k">${esc(CATS[it.cat][0])}</span></button></li>`;
   }).join("");
-  openDrawer("今号のラインナップ", `<ul class="dlist">${items}</ul>`);
+  openDrawer(T.lineupTitle, `<ul class="dlist">${items}</ul>`);
+});
+
+/* 言語の切り替え：選んだ言語を覚えて、同じ場所のまま読み直す */
+$("#langBtn").addEventListener("click",()=>{
+  const next = EN ? "ja" : "en";
+  try{ localStorage.setItem("ahl-lang", next); }catch(_){}
+  const u = new URL(location.href); u.searchParams.set("lang", next);
+  location.replace(u.href);
 });
 
 /* バックナンバー：archive/YYYY-MM-DD.html が公開されている日だけ並べる */
 const IN_ARCHIVE = /\/archive\/[^/]*$/.test(location.pathname);
 const ROOT = IN_ARCHIVE ? "../" : "./";
 function ymd(d){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
-function jpLabel(s){ const d=new Date(s+"T12:00:00+09:00"); return `${d.getMonth()+1}/${d.getDate()}(${"日月火水木金土"[d.getDay()]})号`; }
+function jpLabel(s){ const d=new Date(s+"T12:00:00+09:00"); return EN ? `${MON[d.getMonth()]} ${d.getDate()} (${WK_EN[d.getDay()]})` : `${d.getMonth()+1}/${d.getDate()}(${"日月火水木金土"[d.getDay()]})号`; }
 async function exists(url){
   if(!/^https?:/.test(location.href)) return false;
   try{ const r = await fetch(url,{method:"HEAD",cache:"no-store"}); return r.ok; }catch(_){ return false; }
 }
 $("#gou").addEventListener("click",async ()=>{
-  openDrawer("バックナンバー", `<p class="dnote">さがしています…</p>`);
+  openDrawer(T.backTitle, `<p class="dnote">${T.searching}</p>`);
   const base = new Date(ISSUE.date+"T12:00:00+09:00");
-  const rel = ["昨日","一昨日"];
-  const rows = [`<li><a href="${ROOT}" class="${IN_ARCHIVE?"":"now"}"><span class="n">最新</span><span>最新号を読む</span><span class="k">TOP</span></a></li>`];
+  const rel = T.yest;
+  const rows = [`<li><a href="${ROOT}" class="${IN_ARCHIVE?"":"now"}"><span class="n">${T.latest}</span><span>${T.readLatest}</span><span class="k">TOP</span></a></li>`];
   const checks = [];
   for(let k=1;k<=7;k++){
     const d = new Date(base); d.setDate(d.getDate()-k);
     const s = ymd(d), url = `${ROOT}archive/${s}.html`;
-    checks.push(exists(url).then(ok=> ok ? `<li><a href="${url}"><span class="n">${rel[k-1]||k+"日前"}</span><span>${jpLabel(s)}</span><span class="k">読む</span></a></li>` : ""));
+    checks.push(exists(url).then(ok=> ok ? `<li><a href="${url}"><span class="n">${rel[k-1]||T.daysAgo(k)}</span><span>${jpLabel(s)}</span><span class="k">${T.read}</span></a></li>` : ""));
   }
   const found = (await Promise.all(checks)).filter(Boolean);
-  const note = found.length ? "" : `<p class="dnote">まだ読める過去の号がありません。公開ページでは、毎朝の号がここに7日分たまっていきます。</p>`;
-  $("#dbody").innerHTML = `<p class="dnote">いま読んでいるのは ${jpLabel(ISSUE.date)} です。</p><ul class="dlist">${rows.join("")}${found.join("")}</ul>${note}`;
+  const note = found.length ? "" : `<p class="dnote">${T.noBack}</p>`;
+  $("#dbody").innerHTML = `<p class="dnote">${T.nowReading(jpLabel(ISSUE.date))}</p><ul class="dlist">${rows.join("")}${found.join("")}</ul>${note}`;
 });
 document.addEventListener("click",e=>{ if(e.target.closest("[data-close]")) closeDrawer(); });
 
