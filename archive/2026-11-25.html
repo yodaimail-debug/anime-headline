@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>アニメ業界ヘッドライン</title>
 <meta name="description" content="アニメ業界のニュースと作り手の声を、毎朝1号にまとめたヘッドライン。縦にスクロールで次のカット、横にめくると解説。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="アニメ業界ヘッドライン">
+<meta property="og:title" content="アニメ業界ヘッドライン">
+<meta property="og:description" content="アニメ業界のニュースと作り手の声を、毎朝1号にまとめたヘッドライン。">
+<meta property="og:url" content="https://yodaimail-debug.github.io/anime-headline/">
+<meta property="og:image" content="https://yodaimail-debug.github.io/anime-headline/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yodaimail-debug.github.io/anime-headline/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Dela+Gothic+One&display=swap" rel="stylesheet">
@@ -156,7 +166,12 @@ button.date::after{content:" ▾"}
 .toast{position:fixed;left:50%;bottom:calc(var(--bottom) + 18px);transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;font-weight:700;padding:8px 14px;border-radius:99px;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
 .toast.on{opacity:1}
 
-@media (min-width:900px){.card{padding-left:18vw;padding-right:18vw}}
+/* パソコンではスマホ1台分の幅で中央に表示 */
+@media (min-width:520px){
+  html{background:#d9d2c3}
+  body{max-width:430px;margin:0 auto;box-shadow:0 0 0 2.5px var(--ink),0 0 40px rgba(27,31,42,.25)}
+  header,footer,.drawer{left:calc(50% - 215px);right:calc(50% - 215px)}
+}
 @media (max-width:380px){.logo b{font-size:14.5px}.date{font-size:12px;padding:4px 9px}.page{padding:16px 14px 14px}}
 @media (max-height:720px){:root{--top:98px;--bottom:74px}h2{font-size:clamp(21px,6vw,28px)}.lead,.steps li p{font-size:14px;line-height:1.75}.gist{font-size:14.5px}.inner{gap:10px}.pill button{height:38px;min-width:38px}.bubble{font-size:13.5px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.sheet{opacity:1;transform:none}}
@@ -412,9 +427,13 @@ document.addEventListener("click",async e=>{
   if(f){ const p = f.closest(".pages"); p.scrollTo({left:p.scrollLeft + p.clientWidth, behavior:"smooth"}); return; }
   const s = e.target.closest("[data-share]");
   if(s){
-    const base = pageUrl();
-    if(!base){ toast("公開後のページでシェアできます"); return; }
-    const url = base+"#"+s.dataset.share, title = s.closest(".card").getAttribute("aria-label");
+    /* 記事ごとのシェア用ページ（見出し入りのカード画像つき）を使う */
+    const SITE = "https://yodaimail-debug.github.io/anime-headline/";
+    const url = (ISSUE && /^\d{4}-\d{2}-\d{2}$/.test(ISSUE.date||""))
+      ? SITE+"s/"+ISSUE.date+"/"+s.dataset.share+".html"
+      : (pageUrl() ? pageUrl()+"#"+s.dataset.share : "");
+    if(!url){ toast("公開後のページでシェアできます"); return; }
+    const title = s.closest(".card").getAttribute("aria-label");
     try{
       if(navigator.share){ await navigator.share({title, url}); }
       else { await navigator.clipboard.writeText(url); toast("リンクをコピーしました"); }
