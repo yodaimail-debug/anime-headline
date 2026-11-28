@@ -3,7 +3,7 @@
    - 画像・フォントなどは保存分を先に出し、裏で新しいものに入れ替える */
 const VER = "ahl-v1";
 const BASE = "/anime-headline/";
-const CORE = [BASE, BASE + "manifest.webmanifest", BASE + "og.png",
+const CORE = [BASE, BASE + "manifest.webmanifest", BASE + "og-top.png",
   BASE + "icons/icon-192.png", BASE + "icons/icon-512.png", BASE + "icons/apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
